@@ -1,0 +1,12 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.ani.rnec.gov.co/">
+    <soapenv:Header>
+        <ws:usuario>${headers.username}</ws:usuario>
+        <ws:contrasena>${headers.password}</ws:contrasena>
+        <ws:ip>${headers.ip}</ws:ip>
+    </soapenv:Header>
+    <soapenv:Body>
+        <ws:consultarCedulas>
+            <nuip>${headers.nuip}</nuip>
+        </ws:consultarCedulas>
+    </soapenv:Body>
+</soapenv:Envelope>
