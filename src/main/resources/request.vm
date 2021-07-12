@@ -1,12 +1,19 @@
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.ani.rnec.gov.co/">
-    <soapenv:Header>
-        <ws:usuario>${headers.username}</ws:usuario>
-        <ws:contrasena>${headers.password}</ws:contrasena>
-        <ws:ip>${headers.ip}</ws:ip>
-    </soapenv:Header>
-    <soapenv:Body>
-        <ws:consultarCedulas>
-            <nuip>${headers.nuip}</nuip>
-        </ws:consultarCedulas>
-    </soapenv:Body>
-</soapenv:Envelope>
+<s11:Envelope xmlns:s11='http://schemas.xmlsoap.org/soap/envelope/'>
+  <s11:Header/>
+  <s11:Body>
+    <ns:consultaRCDRequest xmlns:ns='http://morpho.com/col/rnec/rcx/type/'>
+      <tipodocDoc>
+        <tipodoc>${headers.typeDoc}</tipodoc>
+        <doc>${headers.nuip}</doc>
+      </tipodocDoc>
+      <cliente>
+        <IPHost>${headers.ip}</IPHost>
+        <IPCliente>???</IPCliente>
+        <MACHost>???</MACHost>
+        <MACCliente>???</MACCliente>
+        <IDCliente>???</IDCliente>
+        <ClaveCliente>???</ClaveCliente>
+      </cliente>
+    </ns:consultaRCDRequest>
+  </s11:Body>
+</s11:Envelope>

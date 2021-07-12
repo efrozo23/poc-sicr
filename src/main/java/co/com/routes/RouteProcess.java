@@ -1,16 +1,27 @@
 package co.com.routes;
 
 
+import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.camel.CamelContext;
+import org.apache.camel.Endpoint;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.http.HttpComponent;
 import org.apache.camel.model.dataformat.JsonLibrary;
+import org.apache.camel.support.jsse.KeyManagersParameters;
+import org.apache.camel.support.jsse.KeyStoreParameters;
+import org.apache.camel.support.jsse.SSLContextParameters;
+import org.apache.camel.support.jsse.TrustManagersParameters;
 import org.apache.http.conn.ConnectTimeoutException;
+import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -27,11 +38,17 @@ public class RouteProcess extends RouteBuilder{
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
+	
+	@Value("${folder}")
+	private String certificate;
+	
 	 
 
 	@Override
 	public void configure() throws Exception {
 		// TODO Auto-generated method stub
+		
+		Endpoint httpsEndpoint = setupSSLConext(getContext());
 		
 		onException(UnknownHostException.class)
 	 	.handled(true)
@@ -56,6 +73,7 @@ public class RouteProcess extends RouteBuilder{
 			.setHeader("ip", simple("{{service.sirc.ip}}"))
 			.setHeader("username", simple("{{service.sirc.username}}"))
 			.setHeader("password", simple("{{service.sirc.password}}"))
+			
 			.to("velocity://request.vm?contentCache=true&propertiesFile=velocity.properties")
 			.log(LoggingLevel.INFO, logger, "Request al servicio: ${body}")
 			.to(Constants.ROUTE_CONSUME_SERVICE)
@@ -87,9 +105,36 @@ public class RouteProcess extends RouteBuilder{
 			.setHeader(Exchange.HTTP_URI, simple("{{service.sirc.url}}"))
 			.setHeader(Exchange.CONTENT_TYPE, constant(MediaType.TEXT_XML))
 			.setHeader(Exchange.HTTP_METHOD, constant(HttpMethod.POST))
-			.to("http:dummy?httpClient.connectTimeout={{servicio.connection.timeout}}&httpClient.socketTimeout={{servicio.connection.timeout}}&throwExceptionOnFailure=true")
+			.to(httpsEndpoint)
 			.end();
 		
 	}
+	
+	private Endpoint setupSSLConext(CamelContext camelContext) throws Exception {
+		      		
+
+        KeyStoreParameters keyStoreParameters = new KeyStoreParameters();
+        // Change this path to point to your truststore/keystore as jks files
+        keyStoreParameters.setResource(certificate);
+        keyStoreParameters.setPassword("changeit");
+        
+        KeyManagersParameters keyManagersParameters = new KeyManagersParameters();
+        keyManagersParameters.setKeyStore(keyStoreParameters);
+        keyManagersParameters.setKeyPassword("changeit");
+
+        TrustManagersParameters trustManagersParameters = new TrustManagersParameters();
+        trustManagersParameters.setKeyStore(keyStoreParameters);
+
+        SSLContextParameters sslContextParameters = new SSLContextParameters();
+        sslContextParameters.setKeyManagers(keyManagersParameters);
+        sslContextParameters.setTrustManagers(trustManagersParameters);
+
+        HttpComponent httpComponent = camelContext.getComponent("https", HttpComponent.class);
+        httpComponent.setSslContextParameters(sslContextParameters);
+        //This is important to make your cert skip CN/Hostname checks
+        httpComponent.setX509HostnameVerifier(new AllowAllHostnameVerifier());
+        
+        return httpComponent.createEndpoint("https:dummy?httpClient.connectTimeout={{servicio.connection.timeout}}&httpClient.socketTimeout={{servicio.connection.timeout}}&throwExceptionOnFailure=true");
+    }
 
 }

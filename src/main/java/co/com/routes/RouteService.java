@@ -48,6 +48,9 @@ public class RouteService extends RouteBuilder{
 	       		.param().name("nuip")
 	       			.required(true)
 	       			.type(RestParamType.path)
+	       			.name("typeDoc")
+	       			.required(true)
+	       			.type(RestParamType.query)
 	       		.endParam()
 	       		.to(Constants.ROUTE_PROCESS_REQUEST);
 		
