@@ -6,7 +6,7 @@ items:
   kind: "Service"
   metadata:
     annotations:
-      fabric8.io/git-commit: "596760a0b24a4aeab5a0cfab90c2479d55734d63"
+      fabric8.io/git-commit: "7c9741334a693c7a33de483cf9cab3e17dca8e6f"
       fabric8.io/git-branch: "main"
       fabric8.io/git-url: "https://assertsolutions.xp-dev.com/git/poc-icbf-sirc"
       prometheus.io/port: "9779"
@@ -31,7 +31,7 @@ items:
   kind: "Deployment"
   metadata:
     annotations:
-      fabric8.io/git-commit: "596760a0b24a4aeab5a0cfab90c2479d55734d63"
+      fabric8.io/git-commit: "7c9741334a693c7a33de483cf9cab3e17dca8e6f"
       fabric8.io/git-branch: "main"
       fabric8.io/git-url: "https://assertsolutions.xp-dev.com/git/poc-icbf-sirc"
     labels:
@@ -51,7 +51,7 @@ items:
     template:
       metadata:
         annotations:
-          fabric8.io/git-commit: "596760a0b24a4aeab5a0cfab90c2479d55734d63"
+          fabric8.io/git-commit: "7c9741334a693c7a33de483cf9cab3e17dca8e6f"
           fabric8.io/git-branch: "main"
           fabric8.io/git-url: "https://assertsolutions.xp-dev.com/git/poc-icbf-sirc"
         labels:

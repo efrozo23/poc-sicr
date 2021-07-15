@@ -4,7 +4,7 @@
   "metadata" : {
     "annotations" : {
       "fabric8.io/git-branch" : "main",
-      "fabric8.io/git-commit" : "596760a0b24a4aeab5a0cfab90c2479d55734d63",
+      "fabric8.io/git-commit" : "7c9741334a693c7a33de483cf9cab3e17dca8e6f",
       "fabric8.io/git-url" : "https://assertsolutions.xp-dev.com/git/poc-icbf-sirc",
       "prometheus.io/port" : "9779",
       "prometheus.io/scrape" : "true"
@@ -60,11 +60,11 @@
       },
       "manager" : "okhttp",
       "operation" : "Update",
-      "time" : "2021-07-15T03:34:18Z"
+      "time" : "2021-07-15T03:52:58Z"
     } ],
     "name" : "services-sirc",
     "namespace" : "fuse",
-    "resourceVersion" : "29171465",
+    "resourceVersion" : "29176861",
     "selfLink" : "/api/v1/namespaces/fuse/services/services-sirc",
     "uid" : "b7dd8727-d649-4e6e-a4a9-bf7198cb4fb6"
   },

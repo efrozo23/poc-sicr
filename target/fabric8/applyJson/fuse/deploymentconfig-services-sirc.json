@@ -4,11 +4,11 @@
   "metadata" : {
     "annotations" : {
       "fabric8.io/git-branch" : "main",
-      "fabric8.io/git-commit" : "596760a0b24a4aeab5a0cfab90c2479d55734d63",
+      "fabric8.io/git-commit" : "7c9741334a693c7a33de483cf9cab3e17dca8e6f",
       "fabric8.io/git-url" : "https://assertsolutions.xp-dev.com/git/poc-icbf-sirc"
     },
     "creationTimestamp" : "2021-07-03T06:03:31Z",
-    "generation" : 30,
+    "generation" : 31,
     "labels" : {
       "app" : "services-sirc",
       "group" : "poc-svc-sirc",
@@ -54,18 +54,6 @@
       "apiVersion" : "apps.openshift.io/v1",
       "fieldsType" : "FieldsV1",
       "fieldsV1" : {
-        "f:status" : {
-          "f:unavailableReplicas" : { },
-          "f:updatedReplicas" : { }
-        }
-      },
-      "manager" : "openshift-controller-manager",
-      "operation" : "Update",
-      "time" : "2021-07-15T02:34:31Z"
-    }, {
-      "apiVersion" : "apps.openshift.io/v1",
-      "fieldsType" : "FieldsV1",
-      "fieldsV1" : {
         "f:metadata" : {
           "f:annotations" : {
             "." : { },
@@ -85,7 +73,9 @@
           "f:availableReplicas" : { },
           "f:latestVersion" : { },
           "f:observedGeneration" : { },
-          "f:replicas" : { }
+          "f:replicas" : { },
+          "f:unavailableReplicas" : { },
+          "f:updatedReplicas" : { }
         },
         "f:spec" : {
           "f:replicas" : { },
@@ -226,11 +216,11 @@
       },
       "manager" : "okhttp",
       "operation" : "Update",
-      "time" : "2021-07-15T03:34:19Z"
+      "time" : "2021-07-15T03:52:59Z"
     } ],
     "name" : "services-sirc",
     "namespace" : "fuse",
-    "resourceVersion" : "29171470",
+    "resourceVersion" : "29176868",
     "selfLink" : "/apis/apps.openshift.io/v1/namespaces/fuse/deploymentconfigs/services-sirc",
     "uid" : "196beb58-faf2-4635-91f7-c71497fc9cd7"
   },
@@ -258,7 +248,7 @@
       "metadata" : {
         "annotations" : {
           "fabric8.io/git-branch" : "main",
-          "fabric8.io/git-commit" : "596760a0b24a4aeab5a0cfab90c2479d55734d63",
+          "fabric8.io/git-commit" : "7c9741334a693c7a33de483cf9cab3e17dca8e6f",
           "fabric8.io/git-url" : "https://assertsolutions.xp-dev.com/git/poc-icbf-sirc"
         },
         "labels" : {
@@ -359,11 +349,11 @@
       "status" : "True",
       "type" : "Available"
     }, {
-      "lastTransitionTime" : "2021-07-15T02:34:30Z",
-      "lastUpdateTime" : "2021-07-15T02:34:30Z",
-      "message" : "replication controller \"services-sirc-15\" has failed progressing",
-      "reason" : "ProgressDeadlineExceeded",
-      "status" : "False",
+      "lastTransitionTime" : "2021-07-15T03:34:24Z",
+      "lastUpdateTime" : "2021-07-15T03:34:24Z",
+      "message" : "replication controller \"services-sirc-16\" is progressing",
+      "reason" : "ReplicationControllerUpdated",
+      "status" : "True",
       "type" : "Progressing"
     } ],
     "details" : {
@@ -372,11 +362,11 @@
       } ],
       "message" : "config change"
     },
-    "latestVersion" : 15,
-    "observedGeneration" : 29,
+    "latestVersion" : 16,
+    "observedGeneration" : 30,
     "readyReplicas" : 1,
-    "replicas" : 1,
-    "unavailableReplicas" : 0,
-    "updatedReplicas" : 0
+    "replicas" : 2,
+    "unavailableReplicas" : 1,
+    "updatedReplicas" : 1
   }
 }
