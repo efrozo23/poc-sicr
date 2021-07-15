@@ -1,0 +1,382 @@
+{
+  "apiVersion" : "apps.openshift.io/v1",
+  "kind" : "DeploymentConfig",
+  "metadata" : {
+    "annotations" : {
+      "fabric8.io/git-branch" : "main",
+      "fabric8.io/git-commit" : "596760a0b24a4aeab5a0cfab90c2479d55734d63",
+      "fabric8.io/git-url" : "https://assertsolutions.xp-dev.com/git/poc-icbf-sirc"
+    },
+    "creationTimestamp" : "2021-07-03T06:03:31Z",
+    "generation" : 30,
+    "labels" : {
+      "app" : "services-sirc",
+      "group" : "poc-svc-sirc",
+      "provider" : "fabric8",
+      "version" : "1.0.0"
+    },
+    "managedFields" : [ {
+      "apiVersion" : "apps.openshift.io/v1",
+      "fieldsType" : "FieldsV1",
+      "fieldsV1" : {
+        "f:spec" : {
+          "f:template" : {
+            "f:spec" : {
+              "f:containers" : {
+                "k:{\"name\":\"spring-boot\"}" : {
+                  "f:env" : {
+                    "k:{\"name\":\"AB_JOLOKIA_AUTH_OPENSHIFT\"}" : {
+                      "." : { },
+                      "f:name" : { },
+                      "f:value" : { }
+                    },
+                    "k:{\"name\":\"AB_JOLOKIA_OPTS\"}" : {
+                      "." : { },
+                      "f:name" : { },
+                      "f:value" : { }
+                    },
+                    "k:{\"name\":\"AB_JOLOKIA_PASSWORD_RANDOM\"}" : {
+                      "." : { },
+                      "f:name" : { },
+                      "f:value" : { }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "manager" : "oc",
+      "operation" : "Update",
+      "time" : "2021-07-03T06:32:28Z"
+    }, {
+      "apiVersion" : "apps.openshift.io/v1",
+      "fieldsType" : "FieldsV1",
+      "fieldsV1" : {
+        "f:status" : {
+          "f:unavailableReplicas" : { },
+          "f:updatedReplicas" : { }
+        }
+      },
+      "manager" : "openshift-controller-manager",
+      "operation" : "Update",
+      "time" : "2021-07-15T02:34:31Z"
+    }, {
+      "apiVersion" : "apps.openshift.io/v1",
+      "fieldsType" : "FieldsV1",
+      "fieldsV1" : {
+        "f:metadata" : {
+          "f:annotations" : {
+            "." : { },
+            "f:fabric8.io/git-branch" : { },
+            "f:fabric8.io/git-commit" : { },
+            "f:fabric8.io/git-url" : { }
+          },
+          "f:labels" : {
+            "." : { },
+            "f:app" : { },
+            "f:group" : { },
+            "f:provider" : { },
+            "f:version" : { }
+          }
+        },
+        "f:status" : {
+          "f:availableReplicas" : { },
+          "f:latestVersion" : { },
+          "f:observedGeneration" : { },
+          "f:replicas" : { }
+        },
+        "f:spec" : {
+          "f:replicas" : { },
+          "f:revisionHistoryLimit" : { },
+          "f:selector" : {
+            "." : { },
+            "f:app" : { },
+            "f:group" : { },
+            "f:provider" : { }
+          },
+          "f:strategy" : {
+            "f:activeDeadlineSeconds" : { },
+            "f:rollingParams" : {
+              "." : { },
+              "f:intervalSeconds" : { },
+              "f:maxSurge" : { },
+              "f:maxUnavailable" : { },
+              "f:timeoutSeconds" : { },
+              "f:updatePeriodSeconds" : { }
+            },
+            "f:type" : { }
+          },
+          "f:template" : {
+            "." : { },
+            "f:metadata" : {
+              "." : { },
+              "f:annotations" : {
+                "." : { },
+                "f:fabric8.io/git-branch" : { },
+                "f:fabric8.io/git-commit" : { },
+                "f:fabric8.io/git-url" : { }
+              },
+              "f:creationTimestamp" : { },
+              "f:labels" : {
+                "." : { },
+                "f:app" : { },
+                "f:group" : { },
+                "f:provider" : { },
+                "f:version" : { }
+              }
+            },
+            "f:spec" : {
+              "." : { },
+              "f:containers" : {
+                "." : { },
+                "k:{\"name\":\"spring-boot\"}" : {
+                  "." : { },
+                  "f:env" : {
+                    "." : { },
+                    "k:{\"name\":\"KUBERNETES_NAMESPACE\"}" : {
+                      "." : { },
+                      "f:name" : { },
+                      "f:valueFrom" : {
+                        "." : { },
+                        "f:fieldRef" : {
+                          "." : { },
+                          "f:apiVersion" : { },
+                          "f:fieldPath" : { }
+                        }
+                      }
+                    },
+                    "k:{\"name\":\"folder\"}" : {
+                      "." : { },
+                      "f:name" : { },
+                      "f:value" : { }
+                    }
+                  },
+                  "f:image" : { },
+                  "f:imagePullPolicy" : { },
+                  "f:livenessProbe" : {
+                    "." : { },
+                    "f:failureThreshold" : { },
+                    "f:httpGet" : {
+                      "." : { },
+                      "f:path" : { },
+                      "f:port" : { },
+                      "f:scheme" : { }
+                    },
+                    "f:initialDelaySeconds" : { },
+                    "f:periodSeconds" : { },
+                    "f:successThreshold" : { },
+                    "f:timeoutSeconds" : { }
+                  },
+                  "f:name" : { },
+                  "f:ports" : {
+                    "." : { },
+                    "k:{\"containerPort\":8081,\"protocol\":\"TCP\"}" : {
+                      "." : { },
+                      "f:containerPort" : { },
+                      "f:name" : { },
+                      "f:protocol" : { }
+                    },
+                    "k:{\"containerPort\":8778,\"protocol\":\"TCP\"}" : {
+                      "." : { },
+                      "f:containerPort" : { },
+                      "f:name" : { },
+                      "f:protocol" : { }
+                    },
+                    "k:{\"containerPort\":9779,\"protocol\":\"TCP\"}" : {
+                      "." : { },
+                      "f:containerPort" : { },
+                      "f:name" : { },
+                      "f:protocol" : { }
+                    }
+                  },
+                  "f:readinessProbe" : {
+                    "." : { },
+                    "f:failureThreshold" : { },
+                    "f:httpGet" : {
+                      "." : { },
+                      "f:path" : { },
+                      "f:port" : { },
+                      "f:scheme" : { }
+                    },
+                    "f:initialDelaySeconds" : { },
+                    "f:periodSeconds" : { },
+                    "f:successThreshold" : { },
+                    "f:timeoutSeconds" : { }
+                  },
+                  "f:resources" : { },
+                  "f:securityContext" : {
+                    "." : { },
+                    "f:privileged" : { }
+                  },
+                  "f:terminationMessagePath" : { },
+                  "f:terminationMessagePolicy" : { }
+                }
+              },
+              "f:dnsPolicy" : { },
+              "f:restartPolicy" : { },
+              "f:schedulerName" : { },
+              "f:securityContext" : { },
+              "f:terminationGracePeriodSeconds" : { }
+            }
+          },
+          "f:triggers" : { }
+        }
+      },
+      "manager" : "okhttp",
+      "operation" : "Update",
+      "time" : "2021-07-15T03:34:19Z"
+    } ],
+    "name" : "services-sirc",
+    "namespace" : "fuse",
+    "resourceVersion" : "29171470",
+    "selfLink" : "/apis/apps.openshift.io/v1/namespaces/fuse/deploymentconfigs/services-sirc",
+    "uid" : "196beb58-faf2-4635-91f7-c71497fc9cd7"
+  },
+  "spec" : {
+    "replicas" : 1,
+    "revisionHistoryLimit" : 2,
+    "selector" : {
+      "app" : "services-sirc",
+      "group" : "poc-svc-sirc",
+      "provider" : "fabric8"
+    },
+    "strategy" : {
+      "activeDeadlineSeconds" : 21600,
+      "resources" : { },
+      "rollingParams" : {
+        "intervalSeconds" : 1,
+        "maxSurge" : "25%",
+        "maxUnavailable" : "25%",
+        "timeoutSeconds" : 3600,
+        "updatePeriodSeconds" : 1
+      },
+      "type" : "Rolling"
+    },
+    "template" : {
+      "metadata" : {
+        "annotations" : {
+          "fabric8.io/git-branch" : "main",
+          "fabric8.io/git-commit" : "596760a0b24a4aeab5a0cfab90c2479d55734d63",
+          "fabric8.io/git-url" : "https://assertsolutions.xp-dev.com/git/poc-icbf-sirc"
+        },
+        "labels" : {
+          "app" : "services-sirc",
+          "group" : "poc-svc-sirc",
+          "provider" : "fabric8",
+          "version" : "1.0.0"
+        }
+      },
+      "spec" : {
+        "containers" : [ {
+          "env" : [ {
+            "name" : "KUBERNETES_NAMESPACE",
+            "valueFrom" : {
+              "fieldRef" : {
+                "apiVersion" : "v1",
+                "fieldPath" : "metadata.namespace"
+              }
+            }
+          }, {
+            "name" : "AB_JOLOKIA_AUTH_OPENSHIFT",
+            "value" : "false"
+          }, {
+            "name" : "AB_JOLOKIA_OPTS",
+            "value" : "useSslClientAuthentication=false,protocol=https"
+          }, {
+            "name" : "AB_JOLOKIA_PASSWORD_RANDOM",
+            "value" : "false"
+          }, {
+            "name" : "folder",
+            "value" : "/tmp/cert/cacerts.jks"
+          } ],
+          "image" : "services-sirc:1.0.0",
+          "imagePullPolicy" : "IfNotPresent",
+          "livenessProbe" : {
+            "failureThreshold" : 3,
+            "httpGet" : {
+              "path" : "/actuator/health",
+              "port" : 10002,
+              "scheme" : "HTTP"
+            },
+            "initialDelaySeconds" : 180,
+            "periodSeconds" : 10,
+            "successThreshold" : 1,
+            "timeoutSeconds" : 1
+          },
+          "name" : "spring-boot",
+          "ports" : [ {
+            "containerPort" : 8081,
+            "name" : "sunproxyadmin",
+            "protocol" : "TCP"
+          }, {
+            "containerPort" : 9779,
+            "name" : "prometheus",
+            "protocol" : "TCP"
+          }, {
+            "containerPort" : 8778,
+            "name" : "jolokia",
+            "protocol" : "TCP"
+          } ],
+          "readinessProbe" : {
+            "failureThreshold" : 3,
+            "httpGet" : {
+              "path" : "/actuator/health",
+              "port" : 10002,
+              "scheme" : "HTTP"
+            },
+            "initialDelaySeconds" : 10,
+            "periodSeconds" : 10,
+            "successThreshold" : 1,
+            "timeoutSeconds" : 1
+          },
+          "resources" : { },
+          "securityContext" : {
+            "privileged" : false
+          },
+          "terminationMessagePath" : "/dev/termination-log",
+          "terminationMessagePolicy" : "File"
+        } ],
+        "dnsPolicy" : "ClusterFirst",
+        "restartPolicy" : "Always",
+        "schedulerName" : "default-scheduler",
+        "securityContext" : { },
+        "terminationGracePeriodSeconds" : 30
+      }
+    },
+    "test" : false,
+    "triggers" : [ {
+      "type" : "ConfigChange"
+    } ]
+  },
+  "status" : {
+    "availableReplicas" : 1,
+    "conditions" : [ {
+      "lastTransitionTime" : "2021-07-03T06:31:19Z",
+      "lastUpdateTime" : "2021-07-03T06:31:19Z",
+      "message" : "Deployment config has minimum availability.",
+      "status" : "True",
+      "type" : "Available"
+    }, {
+      "lastTransitionTime" : "2021-07-15T02:34:30Z",
+      "lastUpdateTime" : "2021-07-15T02:34:30Z",
+      "message" : "replication controller \"services-sirc-15\" has failed progressing",
+      "reason" : "ProgressDeadlineExceeded",
+      "status" : "False",
+      "type" : "Progressing"
+    } ],
+    "details" : {
+      "causes" : [ {
+        "type" : "ConfigChange"
+      } ],
+      "message" : "config change"
+    },
+    "latestVersion" : 15,
+    "observedGeneration" : 29,
+    "readyReplicas" : 1,
+    "replicas" : 1,
+    "unavailableReplicas" : 0,
+    "updatedReplicas" : 0
+  }
+}
