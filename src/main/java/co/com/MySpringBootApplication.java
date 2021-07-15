@@ -25,7 +25,7 @@ public class MySpringBootApplication {
      * A main method to start this application.
      */
     public static void main(String[] args) {
-    	System.setProperty("https.protocols", "TLSv1.1");
+    	System.setProperty("https.protocols", "TLSv1.2");
     	System.out.println(System.getProperty("https.protocols"));
         SpringApplication.run(MySpringBootApplication.class, args);
     }
@@ -47,7 +47,7 @@ public class MySpringBootApplication {
 		kmp.setKeyStore(ksp);
 		kmp.setKeyPassword("password");
 
-		SSLContext sslContext = SSLContext.getInstance("TLSv1.1");
+		SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
 		
 		SSLContextParameters scp = new SSLContextParameters();
 		scp.setKeyManagers(kmp);
