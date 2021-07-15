@@ -17,4 +17,4 @@ RUN \
     && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias springboot -file sirc.cer
 COPY --from=build /home/app/target/*.jar /usr/local/lib/demo.jar
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/usr/local/lib/demo.jar"]
+ENTRYPOINT ["java","-Dhttps.protocols=TLSv1.1 -Djavax.net.debug=all","-jar","/usr/local/lib/demo.jar"]
