@@ -1,5 +1,8 @@
 package co.com;
 
+import java.security.NoSuchAlgorithmException;
+
+import javax.net.ssl.SSLContext;
 import javax.servlet.Servlet;
 
 import org.apache.camel.component.servlet.CamelHttpTransportServlet;
@@ -34,7 +37,7 @@ public class MySpringBootApplication {
     }
     
     @Bean("getSSLContextParameters")
-    public SSLContextParameters getSSLContextParameters() {
+    public SSLContextParameters getSSLContextParameters() throws NoSuchAlgorithmException {
 		KeyStoreParameters ksp = new KeyStoreParameters();
 		ksp.setResource(certificate);
 		ksp.setPassword("password");
@@ -43,8 +46,11 @@ public class MySpringBootApplication {
 		kmp.setKeyStore(ksp);
 		kmp.setKeyPassword("password");
 
+		SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
+		
 		SSLContextParameters scp = new SSLContextParameters();
 		scp.setKeyManagers(kmp);
+		scp.setSecureSocketProtocol(sslContext.getProtocol());
 		return scp;
     }
   
