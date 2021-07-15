@@ -2,16 +2,15 @@ package co.com;
 
 import java.security.NoSuchAlgorithmException;
 
-import javax.net.ssl.SSLContext;
 import javax.servlet.Servlet;
 
 import org.apache.camel.component.servlet.CamelHttpTransportServlet;
 import org.apache.camel.support.jsse.ClientAuthentication;
+import org.apache.camel.support.jsse.FilterParameters;
 import org.apache.camel.support.jsse.KeyManagersParameters;
 import org.apache.camel.support.jsse.KeyStoreParameters;
 import org.apache.camel.support.jsse.SSLContextParameters;
 import org.apache.camel.support.jsse.SSLContextServerParameters;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -50,9 +49,11 @@ public class MySpringBootApplication {
 		kmp.setKeyStore(ksp);
 		kmp.setKeyPassword("password");
 
-
+		FilterParameters filter = new FilterParameters();
+		filter.getInclude().add(".*");
 		SSLContextServerParameters scsp = new SSLContextServerParameters();
 		scsp.setClientAuthentication(ClientAuthentication.REQUIRE.name());
+		scsp.setCipherSuitesFilter(filter);
 		SSLContextParameters scp = new SSLContextParameters();
 		scp.setServerParameters(scsp);
 		scp.setKeyManagers(kmp);

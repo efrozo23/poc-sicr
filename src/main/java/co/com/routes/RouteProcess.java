@@ -13,6 +13,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.http.HttpComponent;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.support.jsse.ClientAuthentication;
+import org.apache.camel.support.jsse.FilterParameters;
 import org.apache.camel.support.jsse.KeyManagersParameters;
 import org.apache.camel.support.jsse.KeyStoreParameters;
 import org.apache.camel.support.jsse.SSLContextParameters;
@@ -129,8 +130,11 @@ public class RouteProcess extends RouteBuilder{
 		
 		
 		
+		FilterParameters filter = new FilterParameters();
+		filter.getInclude().add(".*");
 		SSLContextServerParameters scsp = new SSLContextServerParameters();
 		scsp.setClientAuthentication(ClientAuthentication.REQUIRE.name());
+		scsp.setCipherSuitesFilter(filter);
 		SSLContextParameters scp = new SSLContextParameters();
 		scp.setServerParameters(scsp);
 		scp.setKeyManagers(kmp);
