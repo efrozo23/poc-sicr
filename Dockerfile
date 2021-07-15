@@ -13,7 +13,7 @@ FROM openjdk:8-jdk-alpine
 USER root
 COPY US_export_policy.jar  $JAVA_HOME/jre/lib/security/
 COPY local_policy.jar  $JAVA_HOME/jre/lib/security/
-COPY java.security  $JAVA_HOME/jre/lib/security/
+
 COPY sirc.cer $JAVA_HOME/jre/lib/security
 RUN \
     cd $JAVA_HOME/jre/lib/security \

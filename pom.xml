@@ -134,6 +134,17 @@
 			<artifactId>camel-test-spring-junit5</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		   <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.59</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bctls-jdk15on</artifactId>
+            <version>1.59</version>
+        </dependency>
 	</dependencies>
 
 	<build>
