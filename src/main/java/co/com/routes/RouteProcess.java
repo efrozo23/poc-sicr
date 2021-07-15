@@ -106,7 +106,7 @@ public class RouteProcess extends RouteBuilder{
 			.setHeader(Exchange.CONTENT_TYPE, constant(MediaType.TEXT_XML))
 			.setHeader(Exchange.HTTP_METHOD, constant(HttpMethod.POST))
 			.toD().allowOptimisedComponents(false).cacheSize(10)
-			.uri("https://dummy?sslContextParameters=#getSSLContextParameters&httpClient.connectTimeout={{servicio.connection.timeout}}&httpClient.socketTimeout={{servicio.connection.timeout}}&throwExceptionOnFailure=true")
+			.uri("https://dummy?sslContextParameters=#getSSLContextParameters&ssl=true&httpClient.connectTimeout={{servicio.connection.timeout}}&httpClient.socketTimeout={{servicio.connection.timeout}}&throwExceptionOnFailure=true")
 			
 			//.to(httpsEndpoint)
 			.end();
