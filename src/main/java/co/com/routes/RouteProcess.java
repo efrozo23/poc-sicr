@@ -5,18 +5,20 @@ import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLEngine;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.http.HttpComponent;
 import org.apache.camel.model.dataformat.JsonLibrary;
+import org.apache.camel.support.jsse.ClientAuthentication;
 import org.apache.camel.support.jsse.KeyManagersParameters;
 import org.apache.camel.support.jsse.KeyStoreParameters;
 import org.apache.camel.support.jsse.SSLContextParameters;
+import org.apache.camel.support.jsse.SSLContextServerParameters;
 import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -125,13 +127,14 @@ public class RouteProcess extends RouteBuilder{
 		kmp.setKeyStore(ksp);
 		kmp.setKeyPassword("password");
 		
-		SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
 		
-		 SSLConnectionSocketFactory f = new SSLConnectionSocketFactory(sslContext, new String[] { "TLSv1.2" }, null,
-                 SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 		
+		SSLContextServerParameters scsp = new SSLContextServerParameters();
+		scsp.setClientAuthentication(ClientAuthentication.REQUIRE.name());
 		SSLContextParameters scp = new SSLContextParameters();
+		scp.setServerParameters(scsp);
 		scp.setKeyManagers(kmp);
+		scp.setSecureSocketProtocol("TLSv1.2");
 		
 		
 
