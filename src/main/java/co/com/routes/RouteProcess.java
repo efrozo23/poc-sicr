@@ -124,11 +124,11 @@ public class RouteProcess extends RouteBuilder{
 		kmp.setKeyStore(ksp);
 		kmp.setKeyPassword("password");
 		
-		SSLContext sslContext = SSLContext.getInstance("TLS");
+
 		
 		SSLContextParameters scp = new SSLContextParameters();
 		scp.setKeyManagers(kmp);
-		scp.setSecureSocketProtocol(sslContext.getProtocol());
+		scp.setSecureSocketProtocol("SSL");
 		
 
 		HttpComponent httpComponent = getContext().getComponent("https", HttpComponent.class);
