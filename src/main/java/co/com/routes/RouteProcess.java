@@ -16,6 +16,7 @@ import org.apache.camel.support.jsse.KeyStoreParameters;
 import org.apache.camel.support.jsse.SSLContextParameters;
 import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -124,11 +125,14 @@ public class RouteProcess extends RouteBuilder{
 		kmp.setKeyStore(ksp);
 		kmp.setKeyPassword("password");
 		
-
+		SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
+		
+		 SSLConnectionSocketFactory f = new SSLConnectionSocketFactory(sslContext, new String[] { "TLSv1.2" }, null,
+                 SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 		
 		SSLContextParameters scp = new SSLContextParameters();
 		scp.setKeyManagers(kmp);
-		scp.setSecureSocketProtocol("SSL");
+		
 		
 
 		HttpComponent httpComponent = getContext().getComponent("https", HttpComponent.class);

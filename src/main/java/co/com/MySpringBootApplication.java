@@ -9,6 +9,7 @@ import org.apache.camel.component.servlet.CamelHttpTransportServlet;
 import org.apache.camel.support.jsse.KeyManagersParameters;
 import org.apache.camel.support.jsse.KeyStoreParameters;
 import org.apache.camel.support.jsse.SSLContextParameters;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,7 +26,7 @@ public class MySpringBootApplication {
      * A main method to start this application.
      */
     public static void main(String[] args) {
-    	System.setProperty("https.protocols", "SSL");
+    	System.setProperty("https.protocols", "TLSv1.2");
     	System.out.println(System.getProperty("https.protocols"));
         SpringApplication.run(MySpringBootApplication.class, args);
     }
@@ -51,7 +52,12 @@ public class MySpringBootApplication {
 		
 		SSLContextParameters scp = new SSLContextParameters();
 		scp.setKeyManagers(kmp);
-		scp.setSecureSocketProtocol("SSL");
+		scp.setSecureSocketProtocol("TLSv1.2");
+		
+		SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
+		
+		 SSLConnectionSocketFactory f = new SSLConnectionSocketFactory(sslContext, new String[] { "TLSv1.2" }, null,
+                SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 		
 		System.out.println("***********************"+System.getProperty("https.protocols"));
 		return scp;
