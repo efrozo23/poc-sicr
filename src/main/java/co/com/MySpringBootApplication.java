@@ -1,6 +1,7 @@
 package co.com;
 
 import java.security.NoSuchAlgorithmException;
+import java.security.Security;
 
 import javax.servlet.Servlet;
 
@@ -29,6 +30,7 @@ public class MySpringBootApplication {
     public static void main(String[] args) {
     	System.setProperty("https.protocols", "TLSv1.2");
     	System.out.println(System.getProperty("https.protocols"));
+    	Security.setProperty("crypto.policy", "unlimited");
         SpringApplication.run(MySpringBootApplication.class, args);
     }
     
