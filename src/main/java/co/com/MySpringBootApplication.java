@@ -22,6 +22,7 @@ public class MySpringBootApplication {
      * A main method to start this application.
      */
     public static void main(String[] args) {
+    	System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
         SpringApplication.run(MySpringBootApplication.class, args);
     }
     
