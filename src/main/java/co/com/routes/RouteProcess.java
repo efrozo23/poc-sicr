@@ -135,6 +135,7 @@ public class RouteProcess extends RouteBuilder{
 		httpComponent.setSslContextParameters(scp);
 		
 		 httpComponent.setX509HostnameVerifier(new AllowAllHostnameVerifier());
+		 System.out.println("------------------------"+System.getProperty("https.protocols"));
         
     }
 
