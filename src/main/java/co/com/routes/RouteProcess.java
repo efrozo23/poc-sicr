@@ -48,7 +48,7 @@ public class RouteProcess extends RouteBuilder{
 	public void configure() throws Exception {
 		// TODO Auto-generated method stub
 		
-		Endpoint httpsEndpoint = setupSSLConext(getContext());
+		setupSSLConext();
 		
 		onException(UnknownHostException.class)
 	 	.handled(true)
@@ -64,6 +64,8 @@ public class RouteProcess extends RouteBuilder{
 		
 		onException(Exception.class)
 	 	.handled(true)
+	 	.log(LoggingLevel.ERROR, logger, "Error encontrado: ${body}")
+	 	.log(LoggingLevel.ERROR, logger, "Error encontrado: ${exception.stacktrace}")
 	 	.setBody(constant("ERROR INTERNO"))
 	 	.setHeader(Exchange.HTTP_RESPONSE_CODE, constant(500))
 	 	.end();
@@ -102,39 +104,36 @@ public class RouteProcess extends RouteBuilder{
 		
 		from(Constants.ROUTE_CONSUME_SERVICE).routeId("ROUTE_CONSUME_SERVICE").streamCaching()
 			.removeHeaders("*")
+			
 			.setHeader(Exchange.HTTP_URI, simple("{{service.sirc.url}}"))
 			.setHeader(Exchange.CONTENT_TYPE, constant(MediaType.TEXT_XML))
 			.setHeader(Exchange.HTTP_METHOD, constant(HttpMethod.POST))
-			.to(httpsEndpoint)
+			.toD().allowOptimisedComponents(false).cacheSize(10)
+			.uri("https://dummy?sslContextParameters=#getSSLContextParameters&httpClient.connectTimeout={{servicio.connection.timeout}}&httpClient.socketTimeout={{servicio.connection.timeout}}&throwExceptionOnFailure=true")
+			
+			//.to(httpsEndpoint)
 			.end();
 		
 	}
 	
-	private Endpoint setupSSLConext(CamelContext camelContext) throws Exception {
+	private void setupSSLConext() throws Exception {
 		      		
 
-        KeyStoreParameters keyStoreParameters = new KeyStoreParameters();
-        // Change this path to point to your truststore/keystore as jks files
-        keyStoreParameters.setResource(certificate);
-        keyStoreParameters.setPassword("changeit");
+		KeyStoreParameters ksp = new KeyStoreParameters();
+		ksp.setResource(certificate);
+		ksp.setPassword("password");
+
+		KeyManagersParameters kmp = new KeyManagersParameters();
+		kmp.setKeyStore(ksp);
+		kmp.setKeyPassword("password");
+
+		SSLContextParameters scp = new SSLContextParameters();
+		scp.setKeyManagers(kmp);
+
+		HttpComponent httpComponent = getContext().getComponent("https", HttpComponent.class);
+		httpComponent.setSslContextParameters(scp);
+		 httpComponent.setX509HostnameVerifier(new AllowAllHostnameVerifier());
         
-        KeyManagersParameters keyManagersParameters = new KeyManagersParameters();
-        keyManagersParameters.setKeyStore(keyStoreParameters);
-        keyManagersParameters.setKeyPassword("changeit");
-
-        TrustManagersParameters trustManagersParameters = new TrustManagersParameters();
-        trustManagersParameters.setKeyStore(keyStoreParameters);
-
-        SSLContextParameters sslContextParameters = new SSLContextParameters();
-        sslContextParameters.setKeyManagers(keyManagersParameters);
-        sslContextParameters.setTrustManagers(trustManagersParameters);
-
-        HttpComponent httpComponent = camelContext.getComponent("https", HttpComponent.class);
-        httpComponent.setSslContextParameters(sslContextParameters);
-        //This is important to make your cert skip CN/Hostname checks
-        httpComponent.setX509HostnameVerifier(new AllowAllHostnameVerifier());
-        
-        return httpComponent.createEndpoint("https:dummy?httpClient.connectTimeout={{servicio.connection.timeout}}&httpClient.socketTimeout={{servicio.connection.timeout}}&throwExceptionOnFailure=true");
     }
 
 }
