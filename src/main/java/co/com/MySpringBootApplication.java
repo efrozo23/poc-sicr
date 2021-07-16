@@ -12,8 +12,6 @@ import org.apache.camel.support.jsse.KeyManagersParameters;
 import org.apache.camel.support.jsse.KeyStoreParameters;
 import org.apache.camel.support.jsse.SSLContextParameters;
 import org.apache.camel.support.jsse.SSLContextServerParameters;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.jsse.provider.BouncyCastleJsseProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -44,29 +42,29 @@ public class MySpringBootApplication {
         return registration;
     }
     
-    @Bean("getSSLContextParameters")
-    public SSLContextParameters getSSLContextParameters() throws NoSuchAlgorithmException {
-		KeyStoreParameters ksp = new KeyStoreParameters();
-		ksp.setResource(certificate);
-		ksp.setPassword("password");
-
-		KeyManagersParameters kmp = new KeyManagersParameters();
-		kmp.setKeyStore(ksp);
-		kmp.setKeyPassword("password");
-
-		FilterParameters filter = new FilterParameters();
-		filter.getInclude().add(".*");
-		SSLContextServerParameters scsp = new SSLContextServerParameters();
-		scsp.setClientAuthentication(ClientAuthentication.REQUIRE.name());
-		scsp.setCipherSuitesFilter(filter);
-		SSLContextParameters scp = new SSLContextParameters();
-		scp.setServerParameters(scsp);
-		scp.setKeyManagers(kmp);
-		scp.setSecureSocketProtocol("TLSv1.2");
-		
-		System.out.println("***********************"+System.getProperty("https.protocols"));
-		return scp;
-    }
+//    @Bean("getSSLContextParameters")
+//    public SSLContextParameters getSSLContextParameters() throws NoSuchAlgorithmException {
+//		KeyStoreParameters ksp = new KeyStoreParameters();
+//		ksp.setResource(certificate);
+//		ksp.setPassword("password");
+//
+//		KeyManagersParameters kmp = new KeyManagersParameters();
+//		kmp.setKeyStore(ksp);
+//		kmp.setKeyPassword("password");
+//
+//		FilterParameters filter = new FilterParameters();
+//		filter.getInclude().add(".*");
+//		SSLContextServerParameters scsp = new SSLContextServerParameters();
+//		scsp.setClientAuthentication(ClientAuthentication.REQUIRE.name());
+//		scsp.setCipherSuitesFilter(filter);
+//		SSLContextParameters scp = new SSLContextParameters();
+//		scp.setServerParameters(scsp);
+//		scp.setKeyManagers(kmp);
+//		scp.setSecureSocketProtocol("TLSv1.2");
+//		
+//		System.out.println("***********************"+System.getProperty("https.protocols"));
+//		return scp;
+//    }
   
 
 }

@@ -5,7 +5,6 @@ import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLEngine;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
@@ -18,8 +17,21 @@ import org.apache.camel.support.jsse.KeyManagersParameters;
 import org.apache.camel.support.jsse.KeyStoreParameters;
 import org.apache.camel.support.jsse.SSLContextParameters;
 import org.apache.camel.support.jsse.SSLContextServerParameters;
+import org.apache.http.HttpHeaders;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.ConnectTimeoutException;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,7 +61,7 @@ public class RouteProcess extends RouteBuilder{
 	public void configure() throws Exception {
 		// TODO Auto-generated method stub
 		
-		setupSSLConext();
+//		setupSSLConext();
 		
 		onException(UnknownHostException.class)
 	 	.handled(true)
@@ -79,6 +91,7 @@ public class RouteProcess extends RouteBuilder{
 			
 			.to("velocity://request.vm?contentCache=true&propertiesFile=velocity.properties")
 			.log(LoggingLevel.INFO, logger, "Request al servicio: ${body}")
+		
 			.to(Constants.ROUTE_CONSUME_SERVICE)
 			.log(LoggingLevel.INFO, logger, "Respuesta con exito")
 			.process(x->{
@@ -109,8 +122,35 @@ public class RouteProcess extends RouteBuilder{
 			.setHeader(Exchange.HTTP_URI, simple("{{service.sirc.url}}"))
 			.setHeader(Exchange.CONTENT_TYPE, constant(MediaType.TEXT_XML))
 			.setHeader(Exchange.HTTP_METHOD, constant(HttpMethod.POST))
-			.toD().allowOptimisedComponents(false).cacheSize(10)
-			.uri("https://dummy?sslContextParameters=#getSSLContextParameters&ssl=true&httpClient.connectTimeout={{servicio.connection.timeout}}&httpClient.socketTimeout={{servicio.connection.timeout}}&throwExceptionOnFailure=true")
+			.process( x ->{
+				 SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
+				 
+			      SSLConnectionSocketFactory f = new SSLConnectionSocketFactory(sslContext, new String[] { "TLSv1.2" }, null,
+			                                        SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+			 
+			      Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
+			                        .register("http", PlainConnectionSocketFactory.getSocketFactory())
+			                        .register("https", f)
+			                        .build();
+			 
+			      PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
+			 
+			      CloseableHttpClient client = HttpClients
+			                        .custom()
+			                        .setSSLSocketFactory(f)
+			                        .setConnectionManager(cm)
+			                        .build();
+			      HttpPost postRequest = new HttpPost(x.getIn().getHeader(Exchange.HTTP_URI,String.class));
+			      
+			      postRequest.addHeader(HttpHeaders.ACCEPT, MediaType.TEXT_XML_VALUE);
+			      postRequest.setEntity(new ByteArrayEntity(x.getIn().getBody(String.class).getBytes("UTF-8")));
+			      HttpResponse r = client.execute(postRequest);
+			      String response = EntityUtils.toString(r.getEntity());
+			      logger.info("RESPUESTA SIRC:{}", response);
+			      
+			})
+//			.toD().allowOptimisedComponents(false).cacheSize(10)
+//			.uri("https://dummy?sslContextParameters=#getSSLContextParameters&ssl=true&httpClient.connectTimeout={{servicio.connection.timeout}}&httpClient.socketTimeout={{servicio.connection.timeout}}&throwExceptionOnFailure=true")
 			
 			//.to(httpsEndpoint)
 			.end();
