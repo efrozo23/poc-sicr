@@ -33,10 +33,7 @@ public class MySpringBootApplication {
     	System.setProperty("https.protocols", "TLSv1.2");
     	System.out.println(System.getProperty("https.protocols"));
     	Security.setProperty("crypto.policy", "unlimited");
-    	Security.removeProvider(BouncyCastleProvider.PROVIDER_NAME);
-    	Security.removeProvider(BouncyCastleJsseProvider.PROVIDER_NAME);
-    	Security.insertProviderAt(new BouncyCastleProvider(), 0);
-    	Security.insertProviderAt(new BouncyCastleJsseProvider(), 1);
+    	
         SpringApplication.run(MySpringBootApplication.class, args);
     }
     
