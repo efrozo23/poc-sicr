@@ -125,7 +125,7 @@ public class RouteProcess extends RouteBuilder{
 			.process( x ->{
 				 SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
 				 sslContext.init(null, null, null);
-			      SSLConnectionSocketFactory f = new SSLConnectionSocketFactory(sslContext, new String[] { "TLSv1", "TLSv1.1", "TLSv1.2" }, new String[] {"AES256-GCM-SHA384"},
+			      SSLConnectionSocketFactory f = new SSLConnectionSocketFactory(sslContext, new String[] { "TLSv1", "TLSv1.1", "TLSv1.2" }, new String[] {"TLS_RSA_WITH_AES_256_CBC_SHA"},
 			                                        SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 			 
 			      Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
