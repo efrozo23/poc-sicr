@@ -124,7 +124,7 @@ public class RouteProcess extends RouteBuilder{
 			.setHeader(Exchange.HTTP_METHOD, constant(HttpMethod.POST))
 			.process( x ->{
 				 SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
-				 
+				 sslContext.init(null, null, null);
 			      SSLConnectionSocketFactory f = new SSLConnectionSocketFactory(sslContext, new String[] { "TLSv1.2" }, null,
 			                                        SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 			 
