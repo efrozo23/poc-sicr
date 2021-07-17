@@ -9,7 +9,7 @@ RUN mvn -f /home/app/pom.xml clean package
 #
 # Package stage
 #
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11
 USER root
 COPY US_export_policy.jar  $JAVA_HOME/jre/lib/security/
 COPY local_policy.jar  $JAVA_HOME/jre/lib/security/
