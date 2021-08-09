@@ -16,7 +16,7 @@ COPY sirc.cer $JAVA_HOME/jre/lib/security/
 COPY a392f9bbb8c2f899.crt $JAVA_HOME/jre/lib/security/
 RUN \
     cd $JAVA_HOME/jre/lib/security \
-    && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias springboot -file sirc.cer \
+##    && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias springboot -file sirc.cer \
     && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias sirc -file a392f9bbb8c2f899.crt
 COPY --from=build /home/app/target/*.jar /usr/local/lib/demo.jar
 EXPOSE 8080
