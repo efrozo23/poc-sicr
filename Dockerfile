@@ -9,7 +9,7 @@ RUN mvn -f /home/app/pom.xml clean package
 #
 # Package stage
 #
-FROM openjdk:11
+FROM fabric8/s2i-java:2.3
 USER root
 
 COPY sirc.cer $JAVA_HOME/jre/lib/security/
