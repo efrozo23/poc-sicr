@@ -42,29 +42,29 @@ public class MySpringBootApplication {
         return registration;
     }
     
-//    @Bean("getSSLContextParameters")
-//    public SSLContextParameters getSSLContextParameters() throws NoSuchAlgorithmException {
-//		KeyStoreParameters ksp = new KeyStoreParameters();
-//		ksp.setResource(certificate);
-//		ksp.setPassword("password");
-//
-//		KeyManagersParameters kmp = new KeyManagersParameters();
-//		kmp.setKeyStore(ksp);
-//		kmp.setKeyPassword("password");
-//
-//		FilterParameters filter = new FilterParameters();
-//		filter.getInclude().add(".*");
-//		SSLContextServerParameters scsp = new SSLContextServerParameters();
-//		scsp.setClientAuthentication(ClientAuthentication.REQUIRE.name());
-//		scsp.setCipherSuitesFilter(filter);
-//		SSLContextParameters scp = new SSLContextParameters();
-//		scp.setServerParameters(scsp);
-//		scp.setKeyManagers(kmp);
-//		scp.setSecureSocketProtocol("TLSv1.2");
-//		
-//		System.out.println("***********************"+System.getProperty("https.protocols"));
-//		return scp;
-//    }
+    @Bean("getSSLContextParameters")
+    public SSLContextParameters getSSLContextParameters() throws NoSuchAlgorithmException {
+		KeyStoreParameters ksp = new KeyStoreParameters();
+		ksp.setResource(certificate);
+		ksp.setPassword("password");
+
+		KeyManagersParameters kmp = new KeyManagersParameters();
+		kmp.setKeyStore(ksp);
+		kmp.setKeyPassword("password");
+
+		FilterParameters filter = new FilterParameters();
+		filter.getInclude().add(".*");
+		SSLContextServerParameters scsp = new SSLContextServerParameters();
+		scsp.setClientAuthentication(ClientAuthentication.REQUIRE.name());
+		scsp.setCipherSuitesFilter(filter);
+		SSLContextParameters scp = new SSLContextParameters();
+		scp.setServerParameters(scsp);
+		scp.setKeyManagers(kmp);
+		scp.setSecureSocketProtocol("TLSv1.2");
+		
+		System.out.println("***********************"+System.getProperty("https.protocols"));
+		return scp;
+    }
   
 
 }

@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-http</artifactId>
-			
+
 		</dependency>
 
 		<dependency>
@@ -134,7 +134,7 @@
 			<artifactId>camel-test-spring-junit5</artifactId>
 			<scope>test</scope>
 		</dependency>
-	
+
 	</dependencies>
 
 	<build>
@@ -185,50 +185,34 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${surefire.plugin.version}</version>
 			</plugin>
-<!-- 			<plugin> -->
-<!-- 				<groupId>io.fabric8</groupId> -->
-<!-- 				<artifactId>fabric8-maven-plugin</artifactId> -->
-<!-- 				<version>4.3.0</version> -->
-<!-- 				<configuration> -->
-					
-<!-- 					<resources> -->
-						
-<!-- 						<volumes> -->
-<!-- 							<volume> -->
-								
-<!-- 								<volumeName>pvc-service-sirc</volumeName> -->
-								
-<!-- 								<path>/tmp/cert/</path> -->
-<!-- 								<secretName>ssl-keystore-cert</secretName> -->
-<!-- 								<mounts>/tmp/cert</mounts> -->
-<!-- 							</volume> -->
-							
-<!-- 						</volumes> -->
-<!-- 					<env> -->
-<!-- 						<folder>/tmp/cert/cacerts.jks</folder> -->
-<!-- 						<AB_JOLOKIA_AUTH_OPENSHIFT>false</AB_JOLOKIA_AUTH_OPENSHIFT> -->
-<!-- 						<AB_JOLOKIA_PASSWORD_RANDOM>false</AB_JOLOKIA_PASSWORD_RANDOM> -->
-<!-- 						<AB_JOLOKIA_OPTS>useSslClientAuthentication=false,protocol=https</AB_JOLOKIA_OPTS> -->
-<!-- 					</env> -->
-						
-<!-- 					</resources> -->
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>fabric8-maven-plugin</artifactId>
+				<version>4.3.0</version>
+				<configuration>
+					<resources>
+						<env>
+							<folder>/tmp/cert/springboot.jks</folder>
+							<AB_JOLOKIA_AUTH_OPENSHIFT>false</AB_JOLOKIA_AUTH_OPENSHIFT>
+							<AB_JOLOKIA_PASSWORD_RANDOM>false</AB_JOLOKIA_PASSWORD_RANDOM>
+							<AB_JOLOKIA_OPTS>useSslClientAuthentication=false,protocol=https</AB_JOLOKIA_OPTS>
+						</env>
+					</resources>
+				</configuration>
+				<executions>
+					<execution>
+						<id>fabric8</id>
+						<goals>
+							<goal>resource</goal>
+							<goal>build</goal>
+							<goal>apply</goal>
+						</goals>
+					</execution>
+				</executions>
 
-<!-- 				</configuration> -->
+			</plugin>
 
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<id>fabric8</id> -->
-<!-- 						<goals> -->
-<!-- 							<goal>resource</goal> -->
-<!-- 							<goal>build</goal> -->
-<!-- 							<goal>apply</goal> -->
-<!-- 						</goals> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
 
-<!-- 			</plugin> -->
-			
-	
 		</plugins>
 	</build>
 

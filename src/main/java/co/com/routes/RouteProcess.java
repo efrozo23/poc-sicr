@@ -122,35 +122,35 @@ public class RouteProcess extends RouteBuilder{
 			.setHeader(Exchange.HTTP_URI, simple("{{service.sirc.url}}"))
 			.setHeader(Exchange.CONTENT_TYPE, constant(MediaType.TEXT_XML))
 			.setHeader(Exchange.HTTP_METHOD, constant(HttpMethod.POST))
-			.process( x ->{
-				 SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
-				 sslContext.init(null, null, null);
-			      SSLConnectionSocketFactory f = new SSLConnectionSocketFactory(sslContext, new String[] { "TLSv1", "TLSv1.1", "TLSv1.2" }, null,
-			                                        SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-			 
-			      Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
-			                        .register("http", PlainConnectionSocketFactory.getSocketFactory())
-			                        .register("https", f)
-			                        .build();
-			 
-			      PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
-			 
-			      CloseableHttpClient client = HttpClients
-			                        .custom()
-			                        .setSSLSocketFactory(f)
-			                        .setConnectionManager(cm)
-			                        .build();
-			      HttpPost postRequest = new HttpPost(x.getIn().getHeader(Exchange.HTTP_URI,String.class));
-			      
-			      postRequest.addHeader(HttpHeaders.ACCEPT, MediaType.TEXT_XML_VALUE);
-			      postRequest.setEntity(new ByteArrayEntity(x.getIn().getBody(String.class).getBytes("UTF-8")));
-			      HttpResponse r = client.execute(postRequest);
-			      String response = EntityUtils.toString(r.getEntity());
-			      logger.info("RESPUESTA SIRC:{}", response);
-			      
-			})
-//			.toD().allowOptimisedComponents(false).cacheSize(10)
-//			.uri("https://dummy?sslContextParameters=#getSSLContextParameters&ssl=true&httpClient.connectTimeout={{servicio.connection.timeout}}&httpClient.socketTimeout={{servicio.connection.timeout}}&throwExceptionOnFailure=true")
+//			.process( x ->{
+//				 SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
+//				 sslContext.init(null, null, null);
+//			      SSLConnectionSocketFactory f = new SSLConnectionSocketFactory(sslContext, new String[] { "TLSv1", "TLSv1.1", "TLSv1.2" }, null,
+//			                                        SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+//			 
+//			      Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
+//			                        .register("http", PlainConnectionSocketFactory.getSocketFactory())
+//			                        .register("https", f)
+//			                        .build();
+//			 
+//			      PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
+//			 
+//			      CloseableHttpClient client = HttpClients
+//			                        .custom()
+//			                        .setSSLSocketFactory(f)
+//			                        .setConnectionManager(cm)
+//			                        .build();
+//			      HttpPost postRequest = new HttpPost(x.getIn().getHeader(Exchange.HTTP_URI,String.class));
+//			      
+//			      postRequest.addHeader(HttpHeaders.ACCEPT, MediaType.TEXT_XML_VALUE);
+//			      postRequest.setEntity(new ByteArrayEntity(x.getIn().getBody(String.class).getBytes("UTF-8")));
+//			      HttpResponse r = client.execute(postRequest);
+//			      String response = EntityUtils.toString(r.getEntity());
+//			      logger.info("RESPUESTA SIRC:{}", response);
+//			      
+//			})
+			.toD().allowOptimisedComponents(false).cacheSize(10)
+			.uri("https://dummy?sslContextParameters=#getSSLContextParameters&ssl=true&httpClient.connectTimeout={{servicio.connection.timeout}}&httpClient.socketTimeout={{servicio.connection.timeout}}&throwExceptionOnFailure=true")
 			
 			//.to(httpsEndpoint)
 			.end();
