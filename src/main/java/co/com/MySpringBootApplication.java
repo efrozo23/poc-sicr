@@ -31,7 +31,7 @@ public class MySpringBootApplication {
     	System.setProperty("https.protocols", "TLSv1.2");
     	System.out.println(System.getProperty("https.protocols"));
     	Security.setProperty("crypto.policy", "unlimited");
-    	
+    	System.setProperty("javax.net.debug", "all");
         SpringApplication.run(MySpringBootApplication.class, args);
     }
     
