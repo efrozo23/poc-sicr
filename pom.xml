@@ -196,9 +196,12 @@
 							<AB_JOLOKIA_AUTH_OPENSHIFT>false</AB_JOLOKIA_AUTH_OPENSHIFT>
 							<AB_JOLOKIA_PASSWORD_RANDOM>false</AB_JOLOKIA_PASSWORD_RANDOM>
 							<AB_JOLOKIA_OPTS>useSslClientAuthentication=false,protocol=https</AB_JOLOKIA_OPTS>
+							<JAVAX_NET_DEBUG>all</JAVAX_NET_DEBUG>
+							<JAVA_ARGS>-Djavax.net.debug=all</JAVA_ARGS>
 						</env>
 					</resources>
 				</configuration>
+				
 				<executions>
 					<execution>
 						<id>fabric8</id>
